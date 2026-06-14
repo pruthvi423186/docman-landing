@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Essential SEO Meta Tags -->
+  <title>Docman — Intelligent Document Scanner & Manager for Android</title>
+  <meta name="description" content="Docman is a premium, beautifully designed document manager and scanner for Android. Organize, scan with ML Kit, and sync to Google Drive effortlessly. No ads, fully open-source.">
+  <meta name="keywords" content="document scanner, PDF scanner, Android app, ML Kit scanner, Google Drive sync, open source document manager, paperless, Docman, Docman app, Android productivity">
+  <meta name="author" content="Pruthviraju Gundrathi">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://pruthvi423186.github.io/Docman/">
+
+  <!-- Open Graph / Facebook (For rich link previews) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pruthvi423186.github.io/Docman/">
+  <meta property="og:title" content="Docman — Intelligent Document Manager">
+  <meta property="og:description" content="A premium scanning experience, reimagined for the way you work. Scan, organize, and access your documents — anywhere, anytime.">
+  <meta property="og:image" content="https://pruthvi423186.github.io/Docman/1000020437.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://pruthvi423186.github.io/Docman/">
+  <meta property="twitter:title" content="Docman — Intelligent Document Manager">
+  <meta property="twitter:description" content="A premium scanning experience, reimagined for the way you work.">
+  <meta property="twitter:image" content="https://pruthvi423186.github.io/Docman/1000020437.jpg">
+
+  <!-- JSON-LD Structured Data for App (Gets Google Rich Snippets) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Docman",
+    "operatingSystem": "Android",
+    "applicationCategory": "ProductivityApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "A premium scanning experience, reimagined for the way you work. Scan, organize, and access your documents — anywhere, anytime.",
+    "author": {
+      "@type": "Person",
+      "name": "Pruthviraju Gundrathi",
+      "url": "https://github.com/pruthvi423186"
+    }
+  }
+  </script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CSS VARIABLES & GLOBAL STYLES (LUXURY BROWN & COPPER PALETTE)
+       ========================================================================== */
+    :root {
+      /* Base Colors */
+      --color-bg: #FDF7F2; 
+      --color-text-primary: #2A1A15; 
+      --color-text-secondary: #70554A; 
+      --color-footer-bg: #1A100C; 
+      
+      /* Gradients - Rich Brown to Copper/Amber */
+      --gradient-primary: linear-gradient(135deg, #4A2E2B 0%, #B9855C 100%);
+      --gradient-banner: linear-gradient(90deg, #3E2421 0%, #A6724B 100%);
+      
+      /* Advanced Glassmorphism (Refined Liquid Glass) */
+      --glass-bg: linear-gradient(110deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 100%);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --glass-shadow: 0 24px 40px rgba(0, 0, 0, 0.08), inset 0 2px 4px rgba(255, 255, 255, 0.7), inset 0 -1px 2px rgba(255, 255, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.1);
+      --glass-blur: blur(40px) saturate(200%);
+      
+      /* Typography */
+      --font-family: 'Plus Jakarta Sans', sans-serif;
+      --fs-hero: clamp(3rem, 6vw, 4.5rem); 
+      --fs-section: clamp(2rem, 4vw, 3rem); 
+      --fs-card-title: 1.125rem; 
+      --fs-body: 1rem; 
+      
+      /* Layout */
+      --max-width: 1200px;
+      --nav-height: 90px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      overflow-x: hidden; 
+      max-width: 100vw;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-bg);
+      color: var(--color-text-primary);
+      line-height: 1.75;
+      font-size: var(--fs-body);
+      overflow-x: hidden;
+    }
+
+    /* Scroll Progress Bar */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: var(--gradient-banner);
+      width: 0%; z-index: 9999;
+      box-shadow: 0 0 10px rgba(185, 133, 92, 0.5);
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2; /* Keep content above 3D background */
+    }
+
+    section { padding: 120px 0; position: relative; }
+    @media (max-width: 768px) { section { padding: 80px 0; } }
+
+    .gradient-text {
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* ==========================================================================
+       BACKGROUND: 3D ISOMETRIC SLIDING APP IMAGES
+       ========================================================================== */
+    .bg-3d-wrapper {
+      position: fixed; inset: 0;
+      overflow: hidden; z-index: 0;
+      background: var(--color-bg);
+      pointer-events: none;
+    }
+    
+    .bg-3d-grid {
+      position: absolute; top: 50%; left: 50%;
+      width: 150vw; height: 150vh;
+      transform: translate(-50%, -50%) rotateX(60deg) rotateZ(-35deg);
+      transform-style: preserve-3d;
+      display: flex; gap: 2vw; justify-content: center;
+      opacity: 0.35; 
+      filter: blur(8px); 
+    }
+
+    .bg-col {
+      display: flex; flex-direction: column; gap: 2vw;
+      width: 18vw; min-width: 200px;
+      will-change: transform;
+    }
+
+    .bg-col img {
+      width: 100%; border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      filter: saturate(1.2) contrast(1.1);
+    }
+
+    @keyframes slideUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    @keyframes slideDown {
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
+    }
+
+    .slide-up { animation: slideUp 40s linear infinite; }
+    .slide-down { animation: slideDown 40s linear infinite; }
+
+    .bg-overlay {
+      position: fixed; inset: 0; z-index: 1;
+      background: radial-gradient(circle at center, transparent 0%, var(--color-bg) 75%);
+    }
+
+    /* ==========================================================================
+       BUTTONS & UTILITIES
+       ========================================================================== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 28px; border-radius: 50px; font-weight: 700;
+      text-decoration: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer; border: none; font-family: var(--font-family);
+    }
+    .btn:hover { transform: translateY(-3px) scale(1.02); }
+    .btn:active { transform: translateY(1px) scale(0.98); }
+
+    .btn-primary {
+      background: var(--gradient-primary); color: white;
+      box-shadow: 0 8px 24px rgba(185, 133, 92, 0.3);
+    }
+    .btn-primary:hover { box-shadow: 0 12px 32px rgba(185, 133, 92, 0.4); }
+    
+    .btn-ghost {
+      background: rgba(255,255,255,0.5); color: var(--color-text-primary);
+      border: 1px solid rgba(74, 46, 43, 0.2); backdrop-filter: blur(10px);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.9); border-color: rgba(74, 46, 43, 0.4); }
+
+    .fade-up {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ==========================================================================
+       ① NAVBAR
+       ========================================================================== */
+    #navbar {
+      position: fixed; top: 24px; left: 50%; transform: translateX(-50%);
+      width: calc(100% - 48px); max-width: var(--max-width); 
+      height: var(--nav-height); border-radius: 60px;
+      display: flex; align-items: center; z-index: 1000;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+    }
+    #navbar.scrolled {
+      top: 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15), inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -1px 2px rgba(255,255,255,0.3);
+    }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 0 40px; }
+    .nav-brand { font-size: 2rem; font-weight: 800; text-decoration: none; color: var(--color-text-primary); display: flex; align-items: center; gap: 14px; letter-spacing: -0.02em; }
+    .nav-brand svg { color: #A6724B; }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a.nav-item { text-decoration: none; color: var(--color-text-secondary); font-weight: 600; position: relative; transition: color 0.3s; }
+    .nav-links a.nav-item:hover { color: var(--color-text-primary); }
+    .nav-links a.nav-item::after {
+      content: ''; position: absolute; width: 0; height: 2px;
+      bottom: -6px; left: 0; background: var(--gradient-primary); transition: width 0.3s ease;
+    }
+    .nav-links a.nav-item:hover::after { width: 100%; }
+    .mobile-menu-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--color-text-primary); cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .nav-container { padding: 0 24px; }
+      .nav-brand { font-size: 1.6rem; gap: 10px; }
+      .nav-brand svg { width: 32px; height: 32px; }
+      
+      .nav-links {
+        position: absolute; top: calc(var(--nav-height) + 12px); left: 0; right: 0;
+        background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border); border-radius: 32px;
+        flex-direction: column; padding: 24px; gap: 20px;
+        box-shadow: var(--glass-shadow);
+        
+        /* Smooth transform animation instead of clip-path to perfectly preserve glass shadows */
+        opacity: 0; visibility: hidden;
+        transform: translateY(-15px) scale(0.98);
+        transform-origin: top center;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .nav-links.active { 
+        opacity: 1; visibility: visible; 
+        transform: translateY(0) scale(1); 
+      }
+      .mobile-menu-btn { display: block; }
+    }
+
+    /* ==========================================================================
+       ② HERO
+       ========================================================================== */
+    #hero { 
+      min-height: 100vh; display: flex; align-items: center; 
+      padding-top: calc(var(--nav-height) + 60px); padding-bottom: 60px; 
+      perspective: 1000px; 
+      transition: padding-top 0.4s cubic-bezier(0.16, 1, 0.3, 1); /* Enables smooth push-down */
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
+    
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 18px; border-radius: 50px; font-size: 0.875rem; font-weight: 700;
+      color: var(--color-text-primary); background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(185, 133, 92, 0.3); backdrop-filter: blur(10px);
+      margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    
+    .hero-title { font-size: var(--fs-hero); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 24px; }
+    .hero-subtitle { font-size: 1.125rem; color: var(--color-text-secondary); max-width: 500px; margin-bottom: 40px; font-weight: 500;}
+    .hero-ctas { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .trust-line { display: block; margin-top: 20px; font-size: 0.875rem; color: var(--color-text-secondary); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;}
+    
+    /* Hero Right Column: 3D Interactive CSS Phone */
+    .hero-phone-wrapper {
+      position: relative; display: flex; justify-content: center;
+      transform-style: preserve-3d;
+      transition: transform 0.1s;
+    }
+    .glow-circle {
+      position: absolute; width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(185, 133, 92, 0.4) 0%, transparent 60%);
+      border-radius: 50%; top: 50%; left: 50%; transform: translate(-50%, -50%) translateZ(-100px);
+    }
+    
+    .css-phone {
+      width: 320px; height: 660px;
+      background: #050505; border-radius: 44px; padding: 12px;
+      box-shadow: 
+        0 40px 100px rgba(74, 46, 43, 0.4), 
+        inset 0 0 0 2px #444, 
+        inset 0 0 10px rgba(255,255,255,0.2), 
+        -4px 0 2px rgba(255,255,255,0.1), 
+        4px 0 2px rgba(0,0,0,0.5); 
+      position: relative; z-index: 1;
+      transform-style: preserve-3d;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .css-phone::before {
+      content: ''; position: absolute;
+      top: 130px; left: -3px; width: 3px; height: 50px;
+      background: #333; border-radius: 4px 0 0 4px;
+      box-shadow: 0 70px 0 #333;
+    }
+    .css-phone-power {
+      position: absolute;
+      top: 160px; right: -3px; width: 3px; height: 60px;
+      background: #333; border-radius: 0 4px 4px 0;
+    }
+
+    .css-phone::after {
+      content: ''; position: absolute; inset: 12px; border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 30%, transparent 50%, transparent 70%, rgba(255,255,255,0.02) 100%);
+      pointer-events: none; z-index: 20;
+    }
+
+    .css-phone-screen {
+      width: 100%; height: 100%; background: #000;
+      border-radius: 32px; overflow: hidden; position: relative;
+    }
+    .css-phone-screen img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    
+    .css-phone-camera {
+      position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+      width: 16px; height: 16px; background: #000;
+      border-radius: 50%; z-index: 10;
+      box-shadow: inset 0 -2px 4px rgba(255,255,255,0.1), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .css-phone-camera::after {
+      content: ''; position: absolute;
+      top: 4px; right: 4px; width: 3px; height: 3px;
+      border-radius: 50%; background: rgba(255,255,255,0.3);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 60px; }
+      .hero-subtitle { margin: 0 auto 40px; }
+      .hero-ctas { justify-content: center; }
+      .hero-title { font-size: clamp(2.5rem, 8vw, 3.5rem); }
+      .hero-badge { margin: 0 auto 24px; }
+    }
+    
+    @media (max-width: 768px) {
+      #hero { padding-top: calc(var(--nav-height) + 40px); }
+      /* THIS SOLVES THE OVERLAP: When menu is open, hero slides down out of the way! */
+      body.menu-open #hero { padding-top: calc(var(--nav-height) + 320px); }
+      
+      .hero-grid { gap: 60px; } /* More breathing room on mobile */
+      .css-phone { width: 260px; height: 540px; border-radius: 36px; padding: 10px; }
+      .css-phone-screen { border-radius: 26px; }
+      .css-phone::before { top: 100px; height: 40px; left: -2px; width: 2px; }
+      .css-phone-power { top: 120px; height: 50px; right: -2px; width: 2px; }
+      .glow-circle { width: 300px; height: 300px; }
+    }
+
+    /* ==========================================================================
+       ③ FEATURES GRID (TRUE LIQUID GLASS)
+       ========================================================================== */
+    .section-header { text-align: center; margin-bottom: 80px; }
+    .section-title { font-size: var(--fs-section); font-weight: 800; color: var(--color-text-primary); letter-spacing: -0.02em; }
+    
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; position: relative; z-index: 10;}
+    
+    .glass-card {
+      /* Strip away the milky white, leave just a faint 5% to 0% trace */
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 100%);
+      /* Extreme refraction: intense blur, super high saturation */
+      backdrop-filter: blur(48px) saturate(300%) contrast(120%);
+      -webkit-backdrop-filter: blur(48px) saturate(300%) contrast(120%);
+      
+      border: 1px solid rgba(255,255,255,0.3);
+      border-top: 1.5px solid rgba(255,255,255,0.9); /* Sharp top reflection */
+      border-left: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 32px; padding: 40px 32px;
+      
+      /* Replaced diffuse inner glow with sharp, glass-like edge reflections */
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.12), 
+        inset 0 1px 2px rgba(255, 255, 255, 0.9), 
+        inset 0 -1px 2px rgba(255, 255, 255, 0.3),
+        inset 0 0 40px rgba(255, 255, 255, 0.05);
+      
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative; overflow: hidden;
+    }
+    
+    .glass-card::before {
+      /* Dramatically reduced the white glare overlay */
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.15), transparent 50%);
+      pointer-events: none;
+    }
+    .glass-card:hover { transform: translateY(-10px); box-shadow: 0 40px 70px rgba(74, 46, 43, 0.2); border-color: rgba(255,255,255,0.8); }
+    
+    .feature-icon {
+      font-size: 36px; margin-bottom: 24px; display: inline-flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px; border-radius: 16px; background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 8px 16px rgba(0,0,0,0.04);
+    }
+    .feature-title { font-size: var(--fs-card-title); font-weight: 700; margin-bottom: 16px; color: var(--color-text-primary); }
+    .feature-desc { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* Boosted the ambient colors behind the glass so they refract beautifully */
+    .feat-decor { position: absolute; border-radius: 50%; filter: blur(60px); z-index: 0; opacity: 0.85; pointer-events: none; }
+    .feat-decor-1 { width: 450px; height: 450px; background: rgba(185, 133, 92, 0.8); top: 5%; left: -5%; }
+    .feat-decor-2 { width: 550px; height: 550px; background: rgba(166, 114, 75, 0.7); bottom: -5%; right: -5%; }
+
+    @media (max-width: 992px) { .features-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { 
+      .features-grid { grid-template-columns: 1fr; gap: 24px; } 
+      .glass-card { padding: 32px 24px; }
+      .section-header { margin-bottom: 40px; }
+    }
+
+    /* ==========================================================================
+       ④ TRUE 3D COVERFLOW CAROUSEL
+       ========================================================================== */
+    #screenshots { position: relative; z-index: 5; }
+    .carousel-wrapper {
+      position: relative; width: 100%; height: 750px;
+      display: flex; justify-content: center; align-items: center;
+      perspective: 1200px; overflow: hidden; margin-top: 40px;
+    }
+    
+    .carousel-item {
+      position: absolute; width: 320px; height: 680px;
+      transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      transform-style: preserve-3d;
+    }
+
+    .phone-mockup {
+      width: 100%; height: 100%; background: #111;
+      border-radius: 36px; padding: 12px; position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .phone-mockup::before {
+      content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 30px; background: #111;
+      border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; z-index: 10;
+    }
+    .phone-mockup img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 24px; background: #eee;
+    }
+    .screenshot-label {
+      position: absolute; bottom: -40px; left: 0; width: 100%;
+      text-align: center; font-weight: 700; font-size: 1.1rem;
+      color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.1em;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .carousel-item.active .screenshot-label { opacity: 1; }
+
+    .carousel-controls {
+      display: flex; justify-content: center; gap: 24px; margin-top: 20px; position: relative; z-index: 20;
+    }
+    .carousel-btn {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; box-shadow: var(--glass-shadow);
+      transition: all 0.3s ease; color: var(--color-text-primary);
+    }
+    .carousel-btn:hover { background: rgba(255,255,255,0.9); transform: scale(1.1); box-shadow: 0 10px 25px rgba(185, 133, 92, 0.2); }
+    .carousel-btn svg { width: 24px; height: 24px; stroke-width: 2.5; }
+
+    @media (max-width: 768px) {
+      .carousel-wrapper { height: 600px; }
+      .carousel-item { width: 240px; height: 520px; }
+    }
+
+    /* ==========================================================================
+       ⑤ HOW IT WORKS
+       ========================================================================== */
+    .steps-container {
+      display: flex; justify-content: space-between; position: relative; margin-top: 60px;
+    }
+    .steps-container::before {
+      content: ''; position: absolute; top: 40px; left: 10%; right: 10%; height: 2px;
+      background-image: linear-gradient(to right, rgba(74, 46, 43, 0.2) 50%, transparent 50%);
+      background-size: 20px 2px; z-index: 0;
+    }
+    .step-item { flex: 1; text-align: center; position: relative; z-index: 1; padding: 0 30px; }
+    .step-circle {
+      width: 80px; height: 80px; border-radius: 50%; background: var(--gradient-primary);
+      color: white; font-size: 2rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 30px; box-shadow: 0 12px 30px rgba(185, 133, 92, 0.3);
+      border: 4px solid rgba(255,255,255,0.8);
+    }
+    .step-title { font-size: 1.25rem; font-weight: 800; margin-bottom: 16px; color: var(--color-text-primary); }
+    .step-desc { font-size: 1rem; color: var(--color-text-secondary); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .steps-container { flex-direction: column; gap: 60px; }
+      .steps-container::before {
+        top: 0; bottom: 0; left: 50%; right: auto; width: 2px; height: 100%;
+        background-image: linear-gradient(to bottom, rgba(74, 46, 43, 0.2) 50%, transparent 50%);
+        background-size: 2px 20px;
+      }
+    }
+
+    /* ==========================================================================
+       ⑥ TECH STACK
+       ========================================================================== */
+    .pill-container {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
+      max-width: 900px; margin: 0 auto;
+    }
+    .pill-badge {
+      background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+      padding: 12px 24px; border-radius: 50px; font-size: 1rem; font-weight: 700;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow); transition: transform 0.3s;
+    }
+    .pill-badge:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(185, 133, 92, 0.15); }
+    .tech-sub { text-align: center; margin-top: 40px; color: var(--color-text-secondary); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    /* ==========================================================================
+       ⑦ DOWNLOAD CTA (Luxe Brown/Copper Banner)
+       ========================================================================== */
+    #download {
+      background: var(--gradient-banner);
+      padding: 140px 0; text-align: center; color: white;
+      position: relative; overflow: hidden;
+      border-radius: 40px; margin: 0 24px 60px;
+      box-shadow: 0 30px 60px rgba(74, 46, 43, 0.2);
+    }
+    
+    .download-decor { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.1); filter: blur(60px); pointer-events: none; }
+    .dec-1 { width: 400px; height: 400px; top: -150px; left: -100px; background: rgba(255, 215, 180, 0.15); }
+    .dec-2 { width: 300px; height: 300px; bottom: -100px; right: 5%; background: rgba(255, 255, 255, 0.1); }
+    
+    .download-content { position: relative; z-index: 10; max-width: 700px; margin: 0 auto; }
+    .download-title { font-size: clamp(3rem, 6vw, 4rem); font-weight: 800; margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.03em; }
+    .download-desc { font-size: 1.25rem; opacity: 0.9; margin-bottom: 48px; font-weight: 500; }
+    .download-ctas { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    
+    .btn-white { background: white; color: #4A2E2B; font-weight: 800; box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+    .btn-white:hover { background: #FDF7F2; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+
+    /* ==========================================================================
+       ⑧ FOOTER
+       ========================================================================== */
+    footer {
+      position: relative; z-index: 10; 
+      background: var(--color-footer-bg); color: rgba(255,255,255,0.6);
+      padding: 60px 0 40px; font-size: 0.9375rem;
+    }
+    .footer-content {
+      display: flex; flex-direction: column; align-items: center; gap: 24px;
+      margin-bottom: 40px; text-align: center;
+    }
+    .footer-brand { display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.5rem; letter-spacing: -0.02em; }
+    .footer-center { font-weight: 500; color: rgba(255,255,255,0.8); }
+    .footer-links { display: flex; gap: 16px; justify-content: center; }
+    .footer-links a {
+      color: white; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.05);
+      transition: all 0.3s;
+    }
+    .footer-links a:hover { background: var(--gradient-primary); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(185, 133, 92, 0.2); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px; text-align: center;
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+      #download { border-radius: 24px; padding: 100px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background 3D Isometric Animation -->
+  <div class="bg-3d-wrapper">
+    <div class="bg-3d-grid">
+      <div class="bg-col slide-up">
+        <img src="1000020437.jpg" alt=""><img src="1000020438.jpg" alt="">
+        <img src="1000020440.jpg" alt=""><img src="1000020439.jpg" alt="">
+      </div>
+      <div class="bg-col slide-down">
+        <img src="1000020441.jpg" alt=""><img src="1000020439.jpg" alt="">
+        <img src="1000020437.jpg" alt=""><img src="1000020438.jpg" alt="">
+      </div>
+      <div class="bg-col slide-up">
+        <img src="1000020440.jpg" alt=""><img src="1000020441.jpg" alt="">
+        <img src="1000020437.jpg" alt=""><img src="1000020439.jpg" alt="">
+      </div>
+      <div class="bg-col slide-down">
+        <img src="1000020438.jpg" alt=""><img src="1000020437.jpg" alt="">
+        <img src="1000020441.jpg" alt=""><img src="1000020440.jpg" alt="">
+      </div>
+      <div class="bg-col slide-up">
+        <img src="1000020439.jpg" alt=""><img src="1000020440.jpg" alt="">
+        <img src="1000020438.jpg" alt=""><img src="1000020437.jpg" alt="">
+      </div>
+    </div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <div id="scroll-progress"></div>
+
+  <!-- ① NAVBAR -->
+  <nav id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="nav-brand">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        Docman
+      </a>
+      
+      <div class="nav-links" id="nav-links">
+        <a href="#features" class="nav-item">Features</a>
+        <a href="#screenshots" class="nav-item">Interface</a>
+        <a href="#how-it-works" class="nav-item">Workflow</a>
+        <a href="#download" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9375rem;">Get App</a>
+      </div>
+
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ② HERO -->
+    <section id="hero">
+      <div class="container hero-grid">
+        <div class="hero-content fade-up">
+          <div class="hero-badge">
+            <span style="color:#B9855C">✦</span> Now on Android
+          </div>
+          <h1 class="hero-title">
+            <span style="display: block;">Redesigned.</span>
+            <span class="gradient-text" style="display: block;">Refined.</span>
+            <span class="gradient-text" style="display: block;">Remarkable.</span>
+          </h1>
+          <p class="hero-subtitle">
+            A premium scanning experience, reimagined for the way you work.
+            Scan, organize, and access your documents — anywhere, anytime.
+          </p>
+          <div class="hero-ctas">
+            <a href="Docman.apk" download class="btn btn-primary">
+              <svg style="margin-right:10px" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Download APK
+            </a>
+            <a href="https://github.com/pruthvi423186/Docman" target="_blank" class="btn btn-ghost">View on GitHub</a>
+          </div>
+          <span class="trust-line">Free · Open Source · No Ads</span>
+        </div>
+
+        <div class="hero-phone-wrapper fade-up">
+          <div class="glow-circle"></div>
+          <!-- 3D Interactive CSS Phone -->
+          <div class="css-phone" id="hero-phone">
+            <div class="css-phone-power"></div>
+            <div class="css-phone-screen">
+              <div class="css-phone-camera"></div>
+              <img src="1000020437.jpg" alt="Docman App Interface">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ FEATURES GRID -->
+    <section id="features">
+      <div class="feat-decor feat-decor-1"></div>
+      <div class="feat-decor feat-decor-2"></div>
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+        </div>
+        
+        <div class="features-grid">
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+            </div>
+            <h3 class="feature-title">Google Drive Sync</h3>
+            <p class="feature-desc">Seamlessly upload, download, and delete files from your Drive. Your documents live in the cloud, always in sync.</p>
+          </div>
+          
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+            </div>
+            <h3 class="feature-title">ML Kit Scanner</h3>
+            <p class="feature-desc">Scan physical documents with your camera and convert them instantly to high-quality, searchable PDFs.</p>
+          </div>
+          
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            </div>
+            <h3 class="feature-title">Frosted Glass UI</h3>
+            <p class="feature-desc">Multi-layered blur effects, light-reactive borders, and chromatic dispersion bring depth to every interaction.</p>
+          </div>
+          
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <h3 class="feature-title">Visual Calendar</h3>
+            <p class="feature-desc">Browse your document history by date. Never lose track of when a file was scanned or uploaded.</p>
+          </div>
+          
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <h3 class="feature-title">Smart Search</h3>
+            <p class="feature-desc">Find any file instantly by name. Filter by PDF, DOC, XLS, or IMG. Results appear as you type.</p>
+          </div>
+          
+          <div class="glass-card fade-up">
+            <div class="feature-icon gradient-text">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="url(#brown-gradient)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </div>
+            <h3 class="feature-title">Adaptive Themes</h3>
+            <p class="feature-desc">Fully adaptive design across both themes. Every color, surface, and shadow tuned for comfort and clarity.</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- SVG Gradient Definition for icons -->
+      <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+        <linearGradient id="brown-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#4A2E2B" />
+          <stop offset="100%" stop-color="#B9855C" />
+        </linearGradient>
+      </svg>
+    </section>
+
+    <!-- ④ TRUE 3D COVERFLOW CAROUSEL -->
+    <section id="screenshots">
+      <div class="container fade-up">
+        <div class="section-header" style="margin-bottom: 20px;">
+          <h2 class="section-title">A closer look.</h2>
+        </div>
+        
+        <div class="carousel-wrapper" id="3d-carousel">
+          <div class="carousel-item">
+            <div class="phone-mockup">
+              <img src="1000020437.jpg" alt="Recent Documents Interface">
+            </div>
+            <div class="screenshot-label">Recent</div>
+          </div>
+          
+          <div class="carousel-item">
+            <div class="phone-mockup">
+              <img src="1000020438.jpg" alt="Calendar History View">
+            </div>
+            <div class="screenshot-label">Calendar</div>
+          </div>
+          
+          <div class="carousel-item">
+            <div class="phone-mockup">
+              <img src="1000020440.jpg" alt="Smart Search">
+            </div>
+            <div class="screenshot-label">Search</div>
+          </div>
+          
+          <div class="carousel-item">
+            <div class="phone-mockup">
+              <img src="1000020439.jpg" alt="Detailed Day View">
+            </div>
+            <div class="screenshot-label">Day View</div>
+          </div>
+          
+          <div class="carousel-item">
+            <div class="phone-mockup">
+              <img src="1000020441.jpg" alt="Floating Action Menu">
+            </div>
+            <div class="screenshot-label">FAB Menu</div>
+          </div>
+        </div>
+
+        <!-- 3D Carousel Controls -->
+        <div class="carousel-controls">
+          <button class="carousel-btn prev" id="coverflow-prev" aria-label="Previous image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button class="carousel-btn next" id="coverflow-next" aria-label="Next image">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ HOW IT WORKS -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2 class="section-title">Up and running in minutes.</h2>
+        </div>
+        
+        <div class="steps-container">
+          <div class="step-item fade-up">
+            <div class="step-circle">1</div>
+            <h3 class="step-title">Sign in with Google</h3>
+            <p class="step-desc">Secure sign-in via Android Credential Manager. No passwords stored.</p>
+          </div>
+          
+          <div class="step-item fade-up">
+            <div class="step-circle">2</div>
+            <h3 class="step-title">Scan or Upload</h3>
+            <p class="step-desc">Use the built-in ML Kit scanner or upload existing files directly to Google Drive.</p>
+          </div>
+          
+          <div class="step-item fade-up">
+            <div class="step-circle">3</div>
+            <h3 class="step-title">Organize & Access</h3>
+            <p class="step-desc">Browse by date in Calendar, search instantly, or filter by type. Your documents, your way.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑥ TECH STACK -->
+    <section id="tech-stack">
+      <div class="container fade-up">
+        <div class="section-header" style="margin-bottom: 50px;">
+          <h2 class="section-title" style="font-size: 2.25rem;">Built with modern Android tech.</h2>
+        </div>
+        
+        <div class="pill-container">
+          <div class="pill-badge"><span class="gradient-text">Kotlin</span></div>
+          <div class="pill-badge"><span class="gradient-text">Jetpack Compose</span></div>
+          <div class="pill-badge"><span class="gradient-text">Material Design 3</span></div>
+          <div class="pill-badge"><span class="gradient-text">MVVM</span></div>
+          <div class="pill-badge"><span class="gradient-text">Dagger Hilt</span></div>
+          <div class="pill-badge"><span class="gradient-text">Coroutines & Flow</span></div>
+          <div class="pill-badge"><span class="gradient-text">Google Drive API v3</span></div>
+          <div class="pill-badge"><span class="gradient-text">ML Kit</span></div>
+          <div class="pill-badge"><span class="gradient-text">Credential Manager</span></div>
+          <div class="pill-badge"><span class="gradient-text">Coil</span></div>
+        </div>
+        
+        <p class="tech-sub">Clean architecture. Tested. Open source.</p>
+      </div>
+    </section>
+
+    <!-- ⑦ DOWNLOAD CTA -->
+    <section id="download" class="fade-up">
+      <div class="download-decor dec-1"></div>
+      <div class="download-decor dec-2"></div>
+      
+      <div class="download-content">
+        <h2 class="download-title">Ready to go paperless?</h2>
+        <p class="download-desc">Download the APK and install it directly on your Android device. No Play Store needed.</p>
+        
+        <div class="download-ctas">
+          <a href="Docman.apk" download class="btn btn-white">
+            <svg style="margin-right:10px" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Download APK
+          </a>
+          <a href="https://github.com/pruthvi423186/Docman" target="_blank" class="btn btn-ghost" style="color:white; border-color:rgba(255,255,255,0.4)">View Source on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ⑧ FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B9855C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 12px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          Docman
+        </div>
+        <div class="footer-center">
+          ✦ Thoughtfully crafted by Pruthvi.
+        </div>
+        <div class="footer-links">
+          <!-- Gmail -->
+          <a href="mailto:your_email@gmail.com" aria-label="Email Support">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </a>
+          <!-- GitHub -->
+          <a href="https://github.com/pruthvi423186" target="_blank" aria-label="GitHub Profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="https://www.linkedin.com/in/pruthviraju-gundrathi-513819136/" target="_blank" aria-label="LinkedIn Profile">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Docman
+      </div>
+    </div>
+  </footer>
+
+  <!-- Vanilla JS for Interactions -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // 1. Scroll Progress & Navbar Blur
+      const progressBar = document.getElementById('scroll-progress');
+      const navbar = document.getElementById('navbar');
+      
+      window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        progressBar.style.width = ((winScroll / height) * 100) + '%';
+        
+        if (winScroll > 60) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+      });
+
+      // 2. Mobile Menu Toggle & Hero Push Down
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const navLinks = document.getElementById('nav-links');
+      
+      mobileBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+
+      document.querySelectorAll('.nav-item').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      });
+
+      // 3. 3D Mouse Parallax on Hero Phone
+      const heroPhone = document.getElementById('hero-phone');
+      const heroSection = document.getElementById('hero');
+      
+      if(window.innerWidth > 992) {
+        heroSection.addEventListener('mousemove', (e) => {
+          const xAxis = (window.innerWidth / 2 - e.pageX) / 40; 
+          const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
+          heroPhone.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        heroSection.addEventListener('mouseleave', () => {
+          heroPhone.style.transform = `rotateY(0deg) rotateX(0deg)`;
+          heroPhone.style.transition = `transform 0.5s ease`;
+        });
+        heroSection.addEventListener('mouseenter', () => {
+          heroPhone.style.transition = `none`;
+        });
+      }
+
+      // 4. Staggered Intersection Observer (Fade-Ups)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            if(entry.target.classList.contains('glass-card') || entry.target.classList.contains('step-item')) {
+               const index = Array.from(entry.target.parentNode.children).indexOf(entry.target);
+               entry.target.style.transitionDelay = `${index * 150}ms`;
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+      // 5. TRUE 3D Coverflow Carousel Logic
+      const carouselItems = document.querySelectorAll('.carousel-item');
+      const btnPrev = document.getElementById('coverflow-prev');
+      const btnNext = document.getElementById('coverflow-next');
+      let activeIndex = 2; // Center item index (0-4)
+
+      function updateCoverflow() {
+        carouselItems.forEach((item, i) => {
+          item.classList.remove('active');
+          
+          if (i === activeIndex) {
+            item.style.transform = 'translateX(0) scale(1) translateZ(100px) rotateY(0deg)';
+            item.style.opacity = '1';
+            item.style.zIndex = '10';
+            item.style.filter = 'brightness(1)';
+            item.classList.add('active');
+          } else if (i === activeIndex - 1) {
+            item.style.transform = 'translateX(-65%) scale(0.85) translateZ(-100px) rotateY(25deg)';
+            item.style.opacity = '0.7';
+            item.style.zIndex = '5';
+            item.style.filter = 'brightness(0.7)';
+          } else if (i === activeIndex + 1) {
+            item.style.transform = 'translateX(65%) scale(0.85) translateZ(-100px) rotateY(-25deg)';
+            item.style.opacity = '0.7';
+            item.style.zIndex = '5';
+            item.style.filter = 'brightness(0.7)';
+          } else {
+            const sign = Math.sign(i - activeIndex);
+            item.style.transform = `translateX(${sign * 100}%) scale(0.7) translateZ(-200px) rotateY(${sign * -40}deg)`;
+            item.style.opacity = '0';
+            item.style.zIndex = '1';
+            item.style.filter = 'brightness(0.4)';
+          }
+        });
+      }
+
+      btnPrev.addEventListener('click', () => {
+        activeIndex = Math.max(activeIndex - 1, 0);
+        updateCoverflow();
+      });
+
+      btnNext.addEventListener('click', () => {
+        activeIndex = Math.min(activeIndex + 1, carouselItems.length - 1);
+        updateCoverflow();
+      });
+
+      carouselItems.forEach((item, idx) => {
+        item.addEventListener('click', () => {
+          activeIndex = idx;
+          updateCoverflow();
+        });
+      });
+
+      updateCoverflow();
+    });
+  </script>
+</body>
+</html>
